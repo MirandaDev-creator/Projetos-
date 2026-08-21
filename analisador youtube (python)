@@ -83,21 +83,21 @@ def main():
     video_id = extrair_video_id(url)
 
     if not video_id:
-        print("\n❌ Link do YouTube inválido.")
+        print("\n Link do YouTube inválido.")
         return
 
-    print("\n🔎 Obtendo transcrição do vídeo...")
+    print("\n Obtendo transcrição do vídeo...")
 
     transcricao = obter_transcricao(video_id)
 
     if not transcricao:
-        print("\n❌ Não foi possível obter a transcrição.")
+        print("\n Não foi possível obter a transcrição.")
         print("O vídeo pode não possuir legendas disponíveis.")
         return
 
-    print("✅ Transcrição obtida!")
+    print(" Transcrição obtida!")
 
-    print("\n🧠 Gerando resumo...")
+    print("\n Gerando resumo...")
 
     try:
         resumo = gerar_resumo(transcricao)
@@ -111,8 +111,7 @@ def main():
         print("\n" + "=" * 50)
 
     except Exception as erro:
-        print(f"\n❌ Erro ao gerar o resumo: {erro}")
-
+        print(f"\n Erro ao gerar o resumo: {erro}")
 
 if __name__ == "__main__":
     main()
