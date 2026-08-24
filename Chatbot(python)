@@ -1,0 +1,68 @@
+from openai import OpenAI
+
+# O SDK pega automaticamente a chave da variável
+client = OpenAI()
+
+# Personalidade do chatbot
+instrucoes = """
+Você é um chatbot inteligente chamado PyBot.
+
+Regras:
+- Responda sempre em português do Brasil.
+- Seja amigável e natural.
+- Explique assuntos complexos de forma simples.
+- Quando falar de programação, mostre exemplos de código quando necessário.
+- Seja objetivo, mas não deixe de explicar o necessário.
+- Se não souber uma informação, diga que não sabe em vez de inventar.
+"""
+
+# Histórico da conversa
+historico = []
+
+print("=" * 60)
+print(" PYBOT - CHATBOT COM INTELIGÊNCIA ARTIFICIAL")
+print("Digite 'sair' para encerrar.")
+print("=" * 60)
+
+while True:
+
+    try:
+        pergunta = input("\nVocê: ").strip()
+
+        if not pergunta:
+            continue
+
+        if pergunta.lower() == "sair":
+            print("\nPyBot: Até mais! ")
+            break
+
+        # Adiciona a pergunta ao histórico
+        historico.append({
+            "role": "user",
+            "content": pergunta
+        })
+
+        # Envia a conversa para a API
+        resposta = client.responses.create(
+            model="gpt-5.6",
+            instructions=instrucoes,
+            input=historico
+        )
+
+        texto = resposta.output_text
+
+        print("\nPyBot:", texto)
+
+        # Salva a resposta no histórico
+        historico.append({
+            "role": "assistant",
+            "content": texto
+        })
+
+    except KeyboardInterrupt:
+        print("\n\nPyBot: Até mais! ")
+        break
+
+    except Exception as erro:
+        print("\n Ocorreu um erro:")
+        print(erro)
